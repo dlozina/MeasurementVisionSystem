@@ -1,0 +1,115 @@
+﻿<Page 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VizijskiSustavWPF" xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:limovi="clr-namespace:VizijskiSustavWPF.limovi" 
+      xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:MjerniStolLimovi="clr-namespace:MjerniStolLimovi;assembly=MjerniStolLimovi" 
+     x:Class="VizijskiSustavWPF.PValovitost"
+    mc:Ignorable="d" 
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	Title="PValovitost" Loaded="Page_Loaded">
+
+    <!--<Page.Resources>
+        <lcl:MainViewModel x:Key="Key1"/>
+    </Page.Resources>-->
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid MinHeight="300" MinWidth="300"  Background="Black" Grid.RowSpan="1"     >
+            <!--<Grid.DataContext>
+                <local:MainViewModel></local:MainViewModel>
+            </Grid.DataContext>-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="490*"/>
+                <ColumnDefinition Width="490*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="295"/>
+                <RowDefinition Height="293*"/>
+                <RowDefinition Height="102"/>
+            </Grid.RowDefinitions>
+            <MjerniStolLimovi:OdabirLimova x:Name="OdabirLimovaKontrola" Margin="4,43,4,0" Grid.ColumnSpan="2" Lim="{Binding Lim , Mode=TwoWay, Source={StaticResource MainLim}}" Purpose="1"/>
+            <Grid Margin="4,4,4,0" Grid.Row="2" Grid.Column="0">
+                <Border BorderBrush="Black" BorderThickness="0">
+                    <Grid Background="{StaticResource pozadina1}" Margin="0,0,0,4">
+                        <Viewbox x:Name="asdaf" Margin="2">
+                            <limovi:MiniMap x:Name="minimapa" Height="3" Width="17"/>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <Grid  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="0,4,4,0" MinHeight="100" Background="black">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="59*"/>
+                    <RowDefinition Height="96"/>
+                    <RowDefinition Height="98"/>
+                    
+                </Grid.RowDefinitions>
+                <Grid Background="{DynamicResource pozadina1}">
+                    <oxy:Plot x:Name="graf" MinHeight="100" Margin="5,5,5,0" Subtitle="" TitlePadding="0" Padding="0,0,10,-2" AxisTierDistance="20" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="2" TitleFontSize="12">
+                        <!--<oxy:PlotView Model="{Binding Model1}" MinHeight="100" Margin="0,0,0,0">-->
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis Position="Bottom" Minimum="NaN" Maximum="NaN" FontSize="10" Title="UDALJENOST [mm]" MinorTickSize="2" MajorTickSize="4" AxisTickToLabelDistance="0" AxisTitleDistance="-10" Margin="0" MajorGridlineStyle="LongDashDot" MinorGridlineStyle="Automatic" TitlePosition="0.8" TickStyle="Inside"/>
+                            <oxy:LinearAxis Position="Left" Minimum="NaN" Maximum="NaN" FontSize="10" Title="DEBLJINA [mm]" MinorTickSize="2" MajorTickSize="4" AxisTickToLabelDistance="0" AxisTitleDistance="-10" MajorGridlineStyle="LongDashDot" MinorGridlineStyle="Automatic" TickStyle="Inside" TitlePosition="0.8"/>
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Title>VALOVITOST</oxy:Plot.Title>
+                    </oxy:Plot>
+                </Grid>
+                <Grid Height="96" Grid.Row="1" Background="{DynamicResource pozadina1}">
+                    <!-- Tablica valovitosti -->
+                    <Border Grid.Row="1" Margin="5,5,5,5" BorderThickness="1" BorderBrush="Black">
+                        <UniformGrid Height="84" Columns="4">
+
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Debljina [mm]" Margin="1" Background="{DynamicResource pozadina1}" FontWeight="Bold" />
+                                <Label Content="Broj valova [N/m]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold"/>
+                                <Label Content="Pozicija" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                            </UniformGrid>
+
+                            <UniformGrid Columns="1" Background="Black" >
+                                <TextBox Name="tb_debljina" Margin="1" Style="{DynamicResource TextBoxStil1}" Text="{Binding Source={StaticResource MainReport}, Path=Valovitost_debljinaLima, Mode=TwoWay}" KeyDown="tb_debljina_KeyDown" LostFocus="tb_debljina_LostFocus"/>
+                                <Label Name="lb_brojValova" Background="{DynamicResource pozadina1}" Margin="1" Content="{Binding Source={StaticResource MainReport}, Path=Valovitost_brojValova , Mode=TwoWay}" />
+                                <!--<TextBox Margin="1" Style="{DynamicResource TextBoxStil1}" LostFocus="TextBox_LostFocus" />-->
+                                <Label Content="{Binding Source={StaticResource MainReport}, Path=Valovitost_pozicija , Mode=TwoWay}" Background="{DynamicResource pozadina1}" Margin="1"/>
+                            </UniformGrid>
+
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Visina vala [mm]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                                <Label Content="Dužina vala [mm]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold"  />
+                                <Label Content="Faktor [%]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold"  />
+                            </UniformGrid>
+
+                            <UniformGrid Columns="1" Background="Black" >
+                                <Label Name="lb_visinaVala" Background="{DynamicResource pozadina1}" Margin="1" Content="{Binding Source={StaticResource MainReport}, Path=Valovitost_visinaVala, Mode=TwoWay}" />
+                                <Label Name="lb_dužinaVala" Background="{DynamicResource pozadina1}" Margin="1" Content="{Binding Source={StaticResource MainReport}, Path=Valovitost_duzinaVala, Mode=TwoWay}"/>
+                                <Label Name="lb_faktorValovitosti" Background="{DynamicResource pozadina1}" Margin="1" Content="{Binding Source={StaticResource MainReport}, Path=Valovitost_faktor, Mode=TwoWay}" />
+                            </UniformGrid>
+
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+
+                <UniformGrid Background="Black" Grid.Row="2" Grid.Column="1">
+                    <Button Name="b_potvrdiPrvuTocku" Margin="0,4,2,2" Style="{DynamicResource ButtonStill1}" Content="POTVRDI PRVU&#10;      TOČKU" FontWeight="Bold" Click="b_potvrdiPrvuTocku_Click"/>
+                    <Button Name="b_potvrdiDruguTočku" Style="{DynamicResource ButtonStill1}" Content="POTVRDI DRUGU&#10;        TOČKU" Margin="2,4,0,2" FontWeight="Bold" Click="b_potvrdiDruguTočku_Click" />
+                    <Button x:Name="b_pokreniMjerenje" Style="{DynamicResource ButtonStill1}" Content="POKRENI MJERENJE" Margin="0,2,2,4" FontWeight="Bold" PreviewMouseDown="b_pokreniMjerenje_PreviewMouseDown" PreviewMouseUp="b_pokreniMjerenje_PreviewMouseUp"/>
+                    <Button Name="b_pokreniKompenzaciju" Style="{DynamicResource ButtonStill1}" Content="POKRENI KOMPENZACIJU" Margin="2,2,0,4" FontWeight="Bold" PreviewMouseDown="b_pokreniKompenzaciju_PreviewMouseDown" PreviewMouseUp="b_pokreniKompenzaciju_PreviewMouseUp" />
+                </UniformGrid>
+            </Grid>
+            <Grid Grid.Row="1" Margin="4,4,4,0" Background="{DynamicResource pozadina1}">
+                <WindowsFormsHost Name="formsHost" Margin="5,5,5,4" />
+            </Grid>
+
+        </Grid>
+        <Grid Height="35" Margin="4,4,4,0" VerticalAlignment="Top" Background="{DynamicResource pozadina1}">
+            <TextBlock Text="VALOVITOST" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+    </Grid>
+</Page>

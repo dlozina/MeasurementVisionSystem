@@ -1,0 +1,127 @@
+﻿<Page 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VizijskiSustavWPF" xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:limovi="clr-namespace:VizijskiSustavWPF.limovi" 
+      xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:MjerniStolLimovi="clr-namespace:MjerniStolLimovi;assembly=MjerniStolLimovi" 
+     x:Class="VizijskiSustavWPF.PSablja"
+    mc:Ignorable="d" 
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	Title="PSablja" d:DesignWidth="1354" d:DesignHeight="828" Loaded="Page_Loaded">
+
+    <!--<Page.Resources>
+        <lcl:MainViewModel x:Key="Key1"/>
+    </Page.Resources>-->
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid MinHeight="300" MinWidth="300"  Background="Black" Grid.RowSpan="1"     >
+            <!--<Grid.DataContext>
+                <local:MainViewModel></local:MainViewModel>
+            </Grid.DataContext>-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="490*"/>
+                <ColumnDefinition Width="490*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="295"/>
+                <RowDefinition Height="293*"/>
+                <RowDefinition Height="102"/>
+            </Grid.RowDefinitions>
+            <MjerniStolLimovi:OdabirLimova x:Name="OdabirLimovaKontrola" Margin="4,43,4,0" Grid.ColumnSpan="2" Lim="{Binding Lim , Mode=TwoWay, Source={StaticResource MainLim}}" Purpose="3"/>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="2" Margin="4,0" VerticalAlignment="Top" Width="Auto" Background="Black" Grid.ColumnSpan="3"/>
+
+
+            <Grid  Grid.Column="1" Grid.Row="1" Margin="0,4,4,0" MinHeight="100" Background="black" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="98"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+
+
+                </Grid.ColumnDefinitions>
+                <Grid Height="90" Grid.Row="1" Background="{DynamicResource pozadina1}">
+                    <Border Grid.Row="1" Margin="5,5,5,5" BorderThickness="1" BorderBrush="Black">
+                        <UniformGrid Height="78" Columns="4">
+
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Duljina sablje [mm]" Margin="1" Background="{DynamicResource pozadina1}" FontWeight="Bold" />
+                                <Label Content="Pozicija" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold"/>
+                                <Label Content="Broj točaka" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold"/>
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black" >
+
+                                <Label Margin="1" Name="l_sabljaDuljina" Content="{Binding Source={StaticResource MainReport}, Path=Sablja_duljina , Mode=TwoWay}" Background="{DynamicResource pozadina1}"/>
+                                <Label Margin="1" Name="l_sabljaPozicija" Content="{Binding Path = LineNumber, ElementName=OdabirLimovaKontrola, Mode=TwoWay}" Background="{DynamicResource pozadina1}"/>
+                                <TextBox x:Name="tb_numberOfMeas" Style="{DynamicResource TextBoxStil1}" Text="{Binding NumberOfMeas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="24" Width="163"  />
+
+
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Visina sablje [mm]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                                <Label Content="Sablja [%]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                                <Label Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black" >
+                                <Label Margin="1" Name="l_sabljaVisina" Content="{Binding Source={StaticResource MainReport}, Path=Sablja_visina ,Mode=TwoWay}" Background="{DynamicResource pozadina1}"/>
+                                <Label Margin="1" Name="l_sabljaPosto" Content="{Binding Source={StaticResource MainReport}, Path=Sablja_posto, Mode=TwoWay}" Background="{DynamicResource pozadina1}"/>
+                                <Label Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+                <Grid Background="{DynamicResource pozadina1}">
+                    <oxy:Plot x:Name="graf" MinHeight="100" Margin="5,5,5,0" Subtitle="" TitlePadding="0" Padding="0,0,10,-2" AxisTierDistance="20" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="2" TitleFontSize="12">
+                        <!--<oxy:PlotView Model="{Binding Model1}" MinHeight="100" Margin="0,0,0,0">-->
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis Position="Bottom" Minimum="NaN" Maximum="NaN" FontSize="10" Title="UDALJENOST [mm]" MinorTickSize="2" MajorTickSize="4" AxisTickToLabelDistance="0" AxisTitleDistance="-10" Margin="0" MajorGridlineStyle="LongDashDot" MinorGridlineStyle="Automatic" TitlePosition="0.8" TickStyle="Inside"/>
+                            <oxy:LinearAxis Position="Left" Minimum="NaN" Maximum="NaN" FontSize="10" Title="DEBLJINA [mm]" MinorTickSize="2" MajorTickSize="4" AxisTickToLabelDistance="0" AxisTitleDistance="-10" MajorGridlineStyle="LongDashDot" MinorGridlineStyle="Automatic" TickStyle="Inside" TitlePosition="0.8" />
+                        </oxy:Plot.Axes>
+                        <oxy:Plot.Title>SABLJA</oxy:Plot.Title>
+                    </oxy:Plot>
+                </Grid>
+                <UniformGrid Background="Black" Grid.Row="2">
+                    <Button Name="p_postaviPrvuTocku" Margin="0,4,2,2" Style="{DynamicResource ButtonStill1}" Content="POSTAVI PRVU&#10;      TOČKU" FontWeight="Bold" Click="p_postaviPrvuTocku_Click" />
+                    <Button Name="p_postaviDruguTocku" Style="{DynamicResource ButtonStill1}" Content="POSTAVI DRUGU&#10;        TOČKU" Margin="2,4,0,2" FontWeight="Bold" Click="p_postaviDruguTocku_Click" />
+                    <Button Name="p_pokreniMjerenje" Style="{DynamicResource ButtonStill1}" Content="  POKRENI&#10; MJERENJE" Margin="0,2,2,4" FontWeight="Bold" PreviewMouseDown="p_pokreniMjerenje_PreviewMouseDown" PreviewMouseUp="p_pokreniMjerenje_PreviewMouseUp"/>
+                    <Button Name="p_novoMjerenje" Style="{DynamicResource ButtonStill1}" Content="NOVO MJERENJE" Margin="2,2,0,4" FontWeight="Bold" />
+                </UniformGrid>
+            </Grid>
+            <Grid Margin="4,4,4,0" Grid.Row="2">
+                <Border BorderBrush="Black" BorderThickness="0">
+                    <Grid Background="{StaticResource pozadina1}" Margin="0,0,0,4">
+                        <Viewbox x:Name="asdaf" Margin="2">
+                            <limovi:MiniMap x:Name="minimapa" Height="3" Width="17"/>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+            </Grid>
+            <GridSplitter HorizontalAlignment="Left" Height="Auto" Margin="790,0,0,0" VerticalAlignment="Stretch" Width="2" Background="Black" Foreground="Black" BorderThickness="0" Grid.RowSpan="3"/>
+
+            <Grid Grid.Row="1" Background="{DynamicResource pozadina1}" Margin="4,4,4,0" >
+                <Grid Background="{StaticResource pozadina1}" Margin="0">
+                    <WindowsFormsHost Name="formsHost" HorizontalAlignment="Stretch" Margin="5,5,5,4" VerticalAlignment="Stretch" />
+                </Grid>
+            </Grid>
+            <!--<WPFMediaKit:VideoCaptureElement Grid.Column="0" Grid.Row="1" Margin="4,4,4,4" Grid.RowSpan="2"></WPFMediaKit:VideoCaptureElement>-->
+            <!--<webcam:VideoCaptureElement DesiredPixelWidth="320"
+                                                  DesiredPixelHeight="240"
+                                                  FPS="30"
+                                                  Width="400"
+                                                  Height="400"
+                                                  VideoCaptureDevice="{Binding Path=SelectedItem, ElementName=videoCapDevices}"
+                                                  x:Name="videoElement" Stretch="Fill" Grid.Column="0" Grid.Row="1" Margin="4,4,4,4" Grid.RowSpan="2" />-->
+        </Grid>
+        <Grid Height="35" Margin="4,4,4,0" VerticalAlignment="Top" Background="{DynamicResource pozadina1}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" FontWeight="Bold"><Run Language="hr-hr" Text="SABLJA"/></TextBlock>
+        </Grid>
+    </Grid>
+</Page>

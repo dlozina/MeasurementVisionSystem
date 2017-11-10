@@ -1,0 +1,114 @@
+﻿<Page 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VizijskiSustavWPF" xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:limovi="clr-namespace:VizijskiSustavWPF.limovi" 
+      xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+    xmlns:MjerniStolLimovi="clr-namespace:MjerniStolLimovi;assembly=MjerniStolLimovi" 
+     x:Class="VizijskiSustavWPF.PKut"
+    mc:Ignorable="d" 
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	Title="PKut" d:DesignWidth="1354" d:DesignHeight="828" Loaded="Page_Loaded">
+
+    <!--<Page.Resources>
+        <lcl:MainViewModel x:Key="Key1"/>
+    </Page.Resources>-->
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid MinHeight="300" MinWidth="300"  Background="Black" Grid.RowSpan="1"     >
+            <!--<Grid.DataContext>
+                <local:MainViewModel></local:MainViewModel>
+            </Grid.DataContext>-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="490*"/>
+                <ColumnDefinition Width="490*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="295"/>
+                <RowDefinition Height="293*"/>
+                <RowDefinition Height="102"/>
+            </Grid.RowDefinitions>
+            <MjerniStolLimovi:OdabirLimova Margin="4,43,4,0" Grid.ColumnSpan="2" Lim="{Binding Lim , Mode=TwoWay, Source={StaticResource MainLim}}" Purpose="4"/>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="2" Margin="4,0" VerticalAlignment="Top" Width="Auto" Background="Black" Grid.ColumnSpan="3"/>
+
+
+            <Grid  Grid.Column="1" Grid.Row="1" Margin="0,4,4,0" MinHeight="100" Background="black" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="98"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid Height="40" Grid.Row="1" Background="{DynamicResource pozadina1}">
+                    <Border Grid.Row="1" Margin="5,5,5,5" BorderThickness="1" BorderBrush="Black">
+                        <UniformGrid Height="28" Columns="4">
+
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Alfa [°]" Margin="1" Background="{DynamicResource pozadina1}" FontWeight="Bold" />
+
+
+
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black" >
+
+                                <Label Name="lb_alfa" Content="0" Margin="1" Background="{DynamicResource pozadina1}" FontWeight="Bold" />
+
+
+
+
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black">
+                                <Label Content="Beta [°]" Background="{DynamicResource pozadina1}" Margin="1" FontWeight="Bold" />
+
+
+                            </UniformGrid>
+                            <UniformGrid Columns="1" Background="Black" >
+                                <Label Name="lb_beta" Content="0" Margin="1" Background="{DynamicResource pozadina1}" FontWeight="Bold" />
+
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+                <UniformGrid Background="Black" Grid.Row="2">
+                    <Button Name="p_postaviPrvuTocku" Margin="0,4,2,2" Style="{DynamicResource ButtonStill1}" Content="POSTAVI PRVU&#10;      TOČKU" FontWeight="Bold" Click="p_postaviPrvuTocku_Click" />
+                    <Button Name="p_postaviDruguTocku" Style="{DynamicResource ButtonStill1}" Content="POSTAVI DRUGU&#10;        TOČKU" Margin="2,4,0,2" FontWeight="Bold" Click="p_postaviDruguTocku_Click" />
+                    <Button Name="p_pokreniMjerenje" Style="{DynamicResource ButtonStill1}" Content="  POKRENI&#10; MJERENJE" Margin="0,2,2,4" FontWeight="Bold" Click="p_pokreniMjerenje_Click" PreviewMouseDown="p_pokreniMjerenje_PreviewMouseDown" PreviewMouseUp="p_pokreniMjerenje_PreviewMouseUp"/>
+                    <Button Name="p_postaviTrecuTocku" Style="{DynamicResource ButtonStill1}" Content="POSTAVI TREĆU&#10;        TOČKU" Margin="2,2,0,4" FontWeight="Bold" Click="p_postaviTrecuTocku_Click" />
+                </UniformGrid>
+                <MjerniStolLimovi:CommonAngle Margin="0" Width="Auto" Height="Auto"/>
+            </Grid>
+            <Grid Margin="4,4,4,0" Grid.Row="2">
+                <Border BorderBrush="Black" BorderThickness="0">
+                    <Grid Background="{StaticResource pozadina1}" Margin="0,0,0,4">
+                        <Viewbox x:Name="asdaf" Margin="2">
+                            <limovi:MiniMap x:Name="minimapa" Height="3" Width="17"/>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+            </Grid>
+            <GridSplitter HorizontalAlignment="Left" Height="Auto" Margin="790,0,0,0" VerticalAlignment="Stretch" Width="2" Background="Black" Foreground="Black" BorderThickness="0" Grid.RowSpan="3"/>
+
+            <Grid Grid.Row="1" Background="{DynamicResource pozadina1}" Margin="4,4,4,0" >
+                <Grid Background="{StaticResource pozadina1}" Margin="0">
+                    <WindowsFormsHost Name="formsHost" HorizontalAlignment="Stretch" Margin="5,5,5,4" VerticalAlignment="Stretch">
+
+                        <!--<PrepoznavanjeOblika:CameraUI x:Name="prepoznavanje_oblika"/>-->
+
+                    </WindowsFormsHost>
+                </Grid>
+            </Grid>
+
+        </Grid>
+        <Grid Height="35" Margin="4,4,4,0" VerticalAlignment="Top" Background="{DynamicResource pozadina1}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="16" FontWeight="Bold"><Run Language="hr-hr" Text="KUT"/></TextBlock>
+        </Grid>
+    </Grid>
+</Page>
